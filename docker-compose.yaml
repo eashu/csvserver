@@ -1,0 +1,12 @@
+version: '3'
+services:
+  csvserver:
+    image: infracloudio/csvserver
+    ports:
+      - "9090:9300"
+    volumes:
+      - ./csvserver.env:/csvserver/csvserver.env:ro
+    environment:
+      - CSVSERVER_INPUT_FILE=/csvserver/inputdata
+    command: >
+      /bin/bash -c " /csvserver/csvserver.env > /csvserver/inputdata && ./csvserver"
