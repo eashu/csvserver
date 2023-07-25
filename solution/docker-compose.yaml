@@ -1,0 +1,22 @@
+version: '3'
+services:
+  csvserver:
+    image: infracloudio/csvserver
+    ports:
+      - "9393:9300"
+    environment:
+      - CSVSERVER_INPUT_FILE=/csvserver/inputdata
+      - INDEX=0
+      - VALUE=234
+    command: >
+      /bin/bash -c "echo '$INDEX, $VALUE' > /csvserver/inputdata && ./csvserver"
+
+  prometheus:
+    image: prom/prometheus:v2.22.0
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+
+volumes:
+  prometheus_data:
